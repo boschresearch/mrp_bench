@@ -1,0 +1,11 @@
+image: warehouse.pgm
+resolution: 0.01
+# origin: [-21.530000, 0, 0.0] # of the left-lower corner of the image.
+origin: [1.316, -27.070000, 0.0] # of the left-lower corner of the image.
+# origin: [0, 0, 0.0] # of the left-lower corner of the image.
+# y is calculated from the image resolution and dimensions,
+# but I don't know where the x-offset comes from. Just measured in gazebo
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.196
+mode: TRINARY # is default anyway

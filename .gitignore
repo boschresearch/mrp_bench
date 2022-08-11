@@ -1,0 +1,11 @@
+build/
+install/
+log/
+*.pyc
+.vscode/
+*.pgm
+map_auto.png
+rmf_ws
+bench_ws/bench_pkg/bench_pkg/param/config.yaml
+log.css
+web_server.log

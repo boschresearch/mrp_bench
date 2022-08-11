@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>mrp_bench_maps</name>
+  <version>1.3.2</version>
+  <description>Derived from the rmf_demos_maps package</description>
+  <maintainer email="mrp@simon-schaefer.net">Simon Schaefer</maintainer>
+  <maintainer email="Luigi.Palmieri@de.bosch.com">Luigi Palmieri</maintainer>
+
+  <license>Apache License 2.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>rmf_building_map_tools</buildtool_depend>
+  <buildtool_depend>ros2run</buildtool_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

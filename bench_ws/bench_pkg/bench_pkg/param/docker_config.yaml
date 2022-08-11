@@ -1,0 +1,119 @@
+common:
+  headless: True
+  rvizForEachAgent: False
+  cellSize: 0.35 # for cellGrid based libs: size of a single cell. Should be slightly greater than the space occpied by a single robot
+  locationTolerance: 0.7 # used for determining if agent is at goal
+  pathToTmpInput: '/tmp/in.yaml'
+  pathToTmpScenarioFile: '/tmp/in.scen' # for MAPF Format
+  pathToTmpSolution: '/tmp/out.yaml'
+  pathToTmpStatistics: '/tmp/stats.csv' # for EECBS
+  useRandomTasks: True # if True, random settings below will be used. If False, there must be an assignment in maps[mapName].tasks that will be used.
+  random:
+    randomSeed: 333
+    numAgents: 2
+  levelName: 'L1'
+  mapName: 'warehouse' # office, airport_terminal, warehouse
+  pathToFlagFileReadyToSpawn: '/tmp/spawn_ready_flag.txt'
+  pathToFlagFileAllGoalsReached: '/tmp/goals_reached_flag.txt'
+  pathToFlagFileFailure: '/tmp/failure_flag.txt'
+  pathToFlagFileRobotsMissing: /tmp/robots_missing_flag.txt
+  pathToFlagFileRunDoesNotCount: /tmp/run_does_not_count_flag.txt
+  nextRobotTimeout: 60.0 # while not all expected robots are seen, they must appear at least in this interval. Otherwise, failure is assumed.
+  firstMoveTimeout: 60.0 # after the waypoints have been sent, all robots must start moving within this time. Otherwise, failure is assumed.
+  recordingTimeout: 600.0 # in seconds
+  pathToRobotsList: '/tmp/robots.yaml'
+  agentPrefix: 'agent'
+  agentZPose: 0.01
+  fleet:
+    name: 'turtlebot3'
+    pathRequestTopicName: 'robot_path_requests'
+  metrics:
+    basePathToOutFiles: '/experiments'
+pathPlanning:
+  algorithmToCall: 'AStar' # ECBS, CBS, ECBS-TA, AStar
+  timeout: 1800.0 # in seconds 
+taskAllocation:
+  fixedAllocation: False # Only relevant if useRandomTasks is False. If fixedAllocation is True, not TA will be performed.
+  randomAllocation: False # only relevant if fixedAllocation is false
+  # only relevant if fixedAllocation, randomAllocation and builtinTA for the respective algorithm are all false:
+  allocationAlgorithm: 'or_linear' # or_sat, or_linear
+  costFunction: 'euclidean' # euclidean, manhattan
+postProcessing:
+  smoothPath: True
+  dilateGrid: True
+pathRequests:
+  sendPathWithBreaks: False
+  breakInSeconds: 5.0
+algorithms:
+  ECBS:
+    gridBased: True
+    libMRP: True
+    builtinTA: False
+    pathToBinary: '/libMultiRobotPlanning/build/ecbs'
+    suboptimalityFactor: 1.1 # 1.0 is lowest. The higher, the less optimal.
+  CBS:
+    gridBased: True
+    libMRP: True
+    builtinTA: False
+    pathToBinary: '/libMultiRobotPlanning/build/cbs'
+  CBS-TA:
+    gridBased: true
+    libMRP: true
+    builtinTA: true
+    pathToBinary: '/libMultiRobotPlanning/build/cbs_ta'
+  ECBS-TA:
+    gridBased: True
+    libMRP: True
+    builtinTA: True
+    pathToBinary: '/libMultiRobotPlanning/build/ecbs_ta'
+  AStar:
+    gridBased: True
+    libMRP: True
+    builtinTA: False
+    pathToBinary: '/libMultiRobotPlanning/build/a_star'
+  EECBS:
+    gridBased: True
+    libMRP: False
+    builtinTA: False
+    useMAPFMap: True
+    pathToBinary: '/EECBS/eecbs'
+    suboptimalityFactor: 1.1 # 1.0 is lowest. The higher, the less optimal.
+maps:
+  office:
+    tasks:
+      - - blue_whale
+        - woodpecker
+      - - toucan
+        - blue_whale
+      # - - blue_whale
+      #   - blue_whale
+      # - - snowshoe
+      #   - snowshoe
+      # - - zonkey
+      #   - zonkey
+      # - - mayfly
+      #   - mayfly
+      # - - supplies
+      #   - supplies
+      # - - coe
+      #   - coe
+      # - - cuttlefish
+      #   - cuttlefish
+      # - - barracuda
+      #   - barracuda
+      # - - puffin
+      #   - puffin
+      # - - booby
+      #   - booby
+      # - - frog
+      #   - frog
+      # - - dugong
+      #   - dugong
+  airport_terminal:
+    tasks:
+      - - baboon
+        - akbash
+      # - - zone_3
+      #   - junction_s10
+      # - - zone_1
+      #   - heron_a
