@@ -86,10 +86,10 @@ RUN git clone --depth 1 https://github.com/Jiaoyang-Li/EECBS.git \
 # clone repos
 RUN mkdir -p $MRP_BENCH_ROOT/rmf_ws/src
 WORKDIR $MRP_BENCH_ROOT/rmf_ws
-RUN wget https://raw.githubusercontent.com/open-rmf/rmf/main/rmf.repos && vcs import src < rmf.repos \ 
+RUN wget https://raw.githubusercontent.com/open-rmf/rmf/galactic/rmf.repos && vcs import src < rmf.repos \ 
     && git clone --depth 1 https://github.com/open-rmf/free_fleet.git
 WORKDIR $MRP_BENCH_ROOT/rmf_ws
-RUN rosdep init && rosdep update && rosdep install --from-paths src --ignore-src --rosdistro galactic -y
+RUN rosdep init && rosdep update --include-eol-distros && rosdep install --from-paths src --ignore-src --rosdistro galactic -y
 
 
 # download pre-traced maps
@@ -107,9 +107,13 @@ RUN mkdir /experiments
 RUN mv $MRP_BENCH_ROOT/$REPO_NAME/bench_ws/bench_pkg/bench_pkg/param/docker_config.yaml $MRP_BENCH_ROOT/$REPO_NAME/bench_ws/bench_pkg/bench_pkg/param/config.yaml 
 RUN ln -s $MRP_BENCH_ROOT/rmf_ws $MRP_BENCH_ROOT/$REPO_NAME/rmf_ws
 
+# selecting right version of nlohmann_json_schema_validator_vendor for galactic
+WORKDIR  $MRP_BENCH_ROOT/rmf_ws/src/thirdparty/nlohmann_json_schema_validator_vendor/
+RUN git checkout f5fca6cdb98748e372d519f3ab2601e14fa30c06
+
 # build
 WORKDIR $MRP_BENCH_ROOT/$REPO_NAME
-RUN source /opt/ros/galactic/setup.bash && colcon build
+RUN source /opt/ros/galactic/setup.bash && colcon build 
 
 
 # setup bashrc
